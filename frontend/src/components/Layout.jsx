@@ -20,11 +20,17 @@ const Layout = ({ children }) => {
 
   const handleSignOut = async () => {
     try {
-      await signOut()
-      navigate('/')
+      console.log('🚪 Logout button clicked')
+      const result = await signOut()
+      console.log('📤 SignOut result:', result)
+      if (result?.error) {
+        console.error('❌ Logout error:', result.error)
+      }
+      console.log('🏠 Navigating to home page')
+      navigate('/', { replace: true })
     } catch (error) {
-      console.error('Sign out error:', error)
-      navigate('/')
+      console.error('❌ Sign out error in Layout:', error)
+      navigate('/', { replace: true })
     }
   }
 

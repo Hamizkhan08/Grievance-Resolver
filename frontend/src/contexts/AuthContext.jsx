@@ -181,13 +181,22 @@ export const AuthProvider = ({ children }) => {
 
   const signOut = async () => {
     try {
+      console.log('🔓 Signing out user...')
       const { error } = await supabase.auth.signOut()
-      if (error) throw error
+      if (error) {
+        console.error('❌ Supabase sign out error:', error)
+        throw error
+      }
+      console.log('✅ Successfully signed out from Supabase')
       setUser(null)
       setUserRole(null)
+      console.log('✅ User state cleared')
       return { error: null }
     } catch (error) {
-      console.error('Sign out error:', error)
+      console.error('❌ Sign out error:', error)
+      // Clear local state even if Supabase fails
+      setUser(null)
+      setUserRole(null)
       return { error }
     }
   }
