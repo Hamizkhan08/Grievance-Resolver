@@ -1,0 +1,15 @@
+{
+  "description": "There is a huge pothole on MG Road in Bangalore near the metro station. It's causing traffic jams and accidents. This needs immediate attention!",
+  "citizen_name": "Rajesh Kumar",
+  "citizen_email": "rajesh.kumar@example.com",
+  "citizen_phone": "9876543210",
+  "location": {
+    "country": "India",
+    "state": "Karnataka",
+    "city": "Bangalore",
+    "district": "Bangalore Urban",
+    "pincode": "560001"
+  },
+  "attachments": []
+}
+
