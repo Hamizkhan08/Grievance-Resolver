@@ -13,7 +13,8 @@ import {
 import { useTranslation } from "../hooks/useTranslation";
 import { formatDistanceToNow } from "date-fns";
 import "./Forums.css";
-import { API_URL as API_BASE_URL } from "../lib/config";
+import { API_URL } from "../lib/config";
+const API_BASE_URL = API_URL;
 
 const Forums = () => {
   const { t } = useTranslation();

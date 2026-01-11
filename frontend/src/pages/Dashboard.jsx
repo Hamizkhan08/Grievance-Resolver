@@ -12,7 +12,8 @@ import {
 } from "lucide-react";
 import { useTranslation } from "../hooks/useTranslation";
 import "./Dashboard.css";
-import { API_URL as API_BASE_URL } from "../lib/config";
+import { API_URL } from "../lib/config";
+const API_BASE_URL = API_URL;
 
 const Dashboard = () => {
   const { t, getStatusTranslation, getUrgencyTranslation } = useTranslation();

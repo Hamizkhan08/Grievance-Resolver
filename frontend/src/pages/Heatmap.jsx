@@ -3,7 +3,8 @@ import axios from "axios";
 import { MapPin, TrendingUp, Clock, BarChart3, Filter } from "lucide-react";
 import { useTranslation } from "../hooks/useTranslation";
 import "./Heatmap.css";
-import { API_URL as API_BASE_URL } from "../lib/config";
+import { API_URL } from "../lib/config";
+const API_BASE_URL = API_URL;
 
 const Heatmap = () => {
   const { t } = useTranslation();

@@ -3,7 +3,8 @@ import axios from "axios";
 import { Send, Bot, X, MessageCircle, Mic, Volume2 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import "./Chatbot.css";
-import { API_URL as API_BASE_URL } from "../lib/config";
+import { API_URL } from "../lib/config";
+const API_BASE_URL = API_URL;
 
 const GREETINGS = {
   en: "Hi! I'm your AI assistant. I can help you with questions about your complaints. Ask me anything! 😊",

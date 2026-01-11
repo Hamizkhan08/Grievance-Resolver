@@ -14,7 +14,8 @@ import Chatbot from "../components/Chatbot";
 import { useTranslation } from "../hooks/useTranslation";
 import VoiceInput from "../components/VoiceInput";
 import "./ComplaintStatus.css";
-import { API_URL as API_BASE_URL } from "../lib/config";
+import { API_URL } from "../lib/config";
+const API_BASE_URL = API_URL;
 
 const ComplaintStatus = () => {
   const { id } = useParams();
