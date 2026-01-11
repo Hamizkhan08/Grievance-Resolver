@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { useTranslation } from '../hooks/useTranslation'
-import { LogIn, Mail, Lock, AlertCircle, UserPlus } from 'lucide-react'
+import { LogIn, Mail, Lock, AlertCircle, UserPlus, Eye, EyeOff } from 'lucide-react'
 import './Login.css'
 
 const Login = () => {
@@ -11,9 +11,11 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
   const [loading, setLoading] = useState(false)
-  const [googleLoading, setGoogleLoading] = useState(false)
-  const { signIn, signUp, signInWithGoogle } = useAuth()
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const { signIn, signUp } = useAuth()
   const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
@@ -58,7 +60,8 @@ const Login = () => {
       } else {
         if (isSignUp && result.data?.user && !result.data.session) {
           // Email confirmation required
-          setError('Please check your email to confirm your account before signing in.')
+          setSuccessMessage('Please check your email to confirm your account before signing in.')
+          setError('')
           setIsSignUp(false)
         } else {
           navigate(from, { replace: true })
@@ -71,33 +74,61 @@ const Login = () => {
     }
   }
 
-  const handleGoogleSignIn = async () => {
-    setError('')
-    setGoogleLoading(true)
-
-    try {
-      const { error } = await signInWithGoogle()
-      if (error) {
-        setError(error.message || 'Failed to sign in with Google')
-      }
-      // OAuth redirect will handle navigation
-    } catch (err) {
-      setError('An unexpected error occurred. Please try again.')
-    } finally {
-      setGoogleLoading(false)
-    }
-  }
-
   return (
     <div className="login-container">
       <div className="login-card">
-        <div className="login-header">
-          <div className="login-icon">
-            {isSignUp ? <UserPlus size={32} /> : <LogIn size={32} />}
+        {/* App Branding */}
+        <div className="login-brand">
+          <div className="brand-logo">🏛️</div>
+          <div className="brand-text">
+            <h2 className="brand-title">Grievance Resolver</h2>
+            <p className="brand-subtitle">AI-Powered Citizen Complaint System</p>
           </div>
+        </div>
+
+        {/* Toggle Tabs */}
+        <div className="auth-toggle">
+          <button 
+            type="button"
+            className={`auth-toggle-btn ${!isSignUp ? 'active' : ''}`}
+            onClick={() => {
+              setIsSignUp(false)
+              setError('')
+              setSuccessMessage('')
+              setPassword('')
+              setConfirmPassword('')
+            }}
+          >
+            <LogIn size={18} />
+            {t('login') || 'Login'}
+          </button>
+          <button 
+            type="button"
+            className={`auth-toggle-btn ${isSignUp ? 'active' : ''}`}
+            onClick={() => {
+              setIsSignUp(true)
+              setError('')
+              setSuccessMessage('')
+              setPassword('')
+              setConfirmPassword('')
+            }}
+          >
+            <UserPlus size={18} />
+            {t('signUp') || 'Sign Up'}
+          </button>
+        </div>
+
+        <div className="login-header">
           <h1>{isSignUp ? (t('signUpTitle') || 'Create Account') : (t('loginTitle') || 'Login')}</h1>
           <p>{isSignUp ? (t('signUpSubtitle') || 'Create a new account to file complaints') : (t('loginSubtitle') || 'Sign in to access your account')}</p>
         </div>
+
+        {successMessage && (
+          <div className="login-success">
+            <AlertCircle size={18} />
+            <span>{successMessage}</span>
+          </div>
+        )}
 
         {error && (
           <div className="login-error">
@@ -128,16 +159,26 @@ const Login = () => {
               <Lock size={18} />
               {t('password') || 'Password'}
             </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder={t('passwordPlaceholder') || 'Enter your password'}
-              required
-              autoComplete={isSignUp ? 'new-password' : 'current-password'}
-              minLength={6}
-            />
+            <div className="password-input-wrapper">
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder={t('passwordPlaceholder') || 'Enter your password'}
+                required
+                autoComplete={isSignUp ? 'new-password' : 'current-password'}
+                minLength={6}
+              />
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
           </div>
 
           {isSignUp && (
@@ -146,23 +187,33 @@ const Login = () => {
                 <Lock size={18} />
                 {t('confirmPassword') || 'Confirm Password'}
               </label>
-              <input
-                id="confirmPassword"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder={t('confirmPasswordPlaceholder') || 'Confirm your password'}
-                required
-                autoComplete="new-password"
-                minLength={6}
-              />
+              <div className="password-input-wrapper">
+                <input
+                  id="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder={t('confirmPasswordPlaceholder') || 'Confirm your password'}
+                  required
+                  autoComplete="new-password"
+                  minLength={6}
+                />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                >
+                  {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
             </div>
           )}
 
           <button 
             type="submit" 
             className="login-button"
-            disabled={loading || googleLoading}
+            disabled={loading}
           >
             {loading 
               ? (isSignUp ? (t('creatingAccount') || 'Creating account...') : (t('loggingIn') || 'Logging in...'))
@@ -170,45 +221,6 @@ const Login = () => {
             }
           </button>
         </form>
-
-        <div className="login-divider">
-          <span>{t('or') || 'or'}</span>
-        </div>
-
-        <button 
-          onClick={handleGoogleSignIn}
-          className="google-button"
-          disabled={googleLoading || loading}
-        >
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/>
-            <path d="M9 18c2.43 0 4.467-.806 5.965-2.184l-2.908-2.258c-.806.54-1.837.86-3.057.86-2.35 0-4.34-1.587-5.053-3.72H.957v2.332C2.438 15.983 5.482 18 9 18z" fill="#34A853"/>
-            <path d="M3.947 10.698c-.18-.54-.282-1.117-.282-1.698s.102-1.158.282-1.698V4.97H.957C.348 6.175 0 7.55 0 9s.348 2.825.957 4.03l2.99-2.332z" fill="#FBBC05"/>
-            <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.97L3.947 7.302C4.66 5.167 6.65 3.58 9 3.58z" fill="#EA4335"/>
-          </svg>
-          {googleLoading ? (t('signingInWithGoogle') || 'Signing in...') : (t('signInWithGoogle') || 'Sign in with Google')}
-        </button>
-
-        <div className="login-footer">
-          <p>
-            {isSignUp 
-              ? (t('alreadyHaveAccount') || 'Already have an account? ')
-              : (t('dontHaveAccount') || "Don't have an account? ")
-            }
-            <button 
-              type="button"
-              onClick={() => {
-                setIsSignUp(!isSignUp)
-                setError('')
-                setPassword('')
-                setConfirmPassword('')
-              }}
-              className="link-button"
-            >
-              {isSignUp ? (t('login') || 'Login') : (t('signUp') || 'Sign Up')}
-            </button>
-          </p>
-        </div>
       </div>
     </div>
   )

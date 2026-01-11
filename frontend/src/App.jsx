@@ -31,60 +31,64 @@ function App() {
       <AuthProvider>
         <LanguageProvider>
           <Router>
-            <Layout>
-              <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route 
-                  path="/" 
-                  element={
-                    <ProtectedRoute>
-                      <Home />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/status/:id?" 
-                  element={
-                    <ProtectedRoute>
-                      <ComplaintStatus />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/dashboard" 
-                  element={
-                    <ProtectedRoute requireAdmin={true}>
-                      <Dashboard />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/heatmap" 
-                  element={
-                    <ProtectedRoute>
-                      <Heatmap />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/forums" 
-                  element={
-                    <ProtectedRoute>
-                      <Forums />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/forum/:complaintId" 
-                  element={
-                    <ProtectedRoute>
-                      <Forum />
-                    </ProtectedRoute>
-                  } 
-                />
-              </Routes>
-              <Chatbot />
-            </Layout>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="*" element={
+                <Layout>
+                  <Routes>
+                    <Route 
+                      path="/" 
+                      element={
+                        <ProtectedRoute>
+                          <Home />
+                        </ProtectedRoute>
+                      } 
+                    />
+                    <Route 
+                      path="/status/:id?" 
+                      element={
+                        <ProtectedRoute>
+                          <ComplaintStatus />
+                        </ProtectedRoute>
+                      } 
+                    />
+                    <Route 
+                      path="/dashboard" 
+                      element={
+                        <ProtectedRoute requireAdmin={true}>
+                          <Dashboard />
+                        </ProtectedRoute>
+                      } 
+                    />
+                    <Route 
+                      path="/heatmap" 
+                      element={
+                        <ProtectedRoute>
+                          <Heatmap />
+                        </ProtectedRoute>
+                      } 
+                    />
+                    <Route 
+                      path="/forums" 
+                      element={
+                        <ProtectedRoute>
+                          <Forums />
+                        </ProtectedRoute>
+                      } 
+                    />
+                    <Route 
+                      path="/forum/:complaintId" 
+                      element={
+                        <ProtectedRoute>
+                          <Forum />
+                        </ProtectedRoute>
+                      } 
+                    />
+                  </Routes>
+                  <Chatbot />
+                </Layout>
+              } />
+            </Routes>
           </Router>
         </LanguageProvider>
       </AuthProvider>
