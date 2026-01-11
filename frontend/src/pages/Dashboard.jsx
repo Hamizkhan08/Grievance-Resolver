@@ -3,8 +3,7 @@ import axios from 'axios'
 import { BarChart3, TrendingUp, AlertTriangle, CheckCircle, RefreshCw, Filter, Edit2, Mail } from 'lucide-react'
 import { useTranslation } from '../hooks/useTranslation'
 import './Dashboard.css'
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+import { API_URL as API_BASE_URL } from '../lib/config'
 
 const Dashboard = () => {
   const { t, getStatusTranslation, getUrgencyTranslation } = useTranslation()

@@ -3,8 +3,7 @@ import axios from 'axios'
 import { MapPin, TrendingUp, Clock, BarChart3, Filter } from 'lucide-react'
 import { useTranslation } from '../hooks/useTranslation'
 import './Heatmap.css'
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+import { API_URL as API_BASE_URL } from '../lib/config'
 
 const Heatmap = () => {
   const { t } = useTranslation()

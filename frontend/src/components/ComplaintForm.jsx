@@ -4,8 +4,7 @@ import { Loader2, Send } from 'lucide-react'
 import { useTranslation } from '../hooks/useTranslation'
 import VoiceInput from './VoiceInput'
 import './ComplaintForm.css'
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+import { API_URL as API_BASE_URL } from '../lib/config'
 
 const ComplaintForm = ({ onSuccess }) => {
   const { t } = useTranslation()

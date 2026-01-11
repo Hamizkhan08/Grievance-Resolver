@@ -3,8 +3,7 @@ import axios from 'axios'
 import { Send, Bot, X, MessageCircle, Mic, Volume2 } from 'lucide-react'
 import { useLanguage } from '../contexts/LanguageContext'
 import './Chatbot.css'
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+import { API_URL as API_BASE_URL } from '../lib/config'
 
 const GREETINGS = {
   en: "Hi! I'm your AI assistant. I can help you with questions about your complaints. Ask me anything! 😊",

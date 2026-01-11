@@ -6,8 +6,7 @@ import { useTranslation } from '../hooks/useTranslation'
 import { formatDistanceToNow } from 'date-fns'
 import { supabase } from '../lib/supabase'
 import './Forum.css'
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+import { API_URL as API_BASE_URL } from '../lib/config'
 const STORAGE_BUCKET = 'forum-images'
 
 const Forum = () => {

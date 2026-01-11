@@ -7,8 +7,7 @@ import Chatbot from '../components/Chatbot'
 import { useTranslation } from '../hooks/useTranslation'
 import VoiceInput from '../components/VoiceInput'
 import './ComplaintStatus.css'
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+import { API_URL as API_BASE_URL } from '../lib/config'
 
 const ComplaintStatus = () => {
   const { id } = useParams()
